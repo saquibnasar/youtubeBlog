@@ -3,7 +3,7 @@ const { createHmac, randomBytes } = require("crypto");
 
 const userSchema = new Schema(
   {
-    name: {
+    fullName: {
       type: String,
       required: true,
     },
