@@ -49,21 +49,23 @@ userSchema.pre("save", function (next) {
   next();
 });
 
-userSchema.static("matchPassword", async function (email, password) {
-  const user = await this.findOne({ email });
-  if (!user) throw new Error("invalid email");
-  if (!password) throw new Error("Password is required");
+userSchema.static(
+  "matchPasswordAndGenerateToken",
+  async function (email, password) {
+    const user = await this.findOne({ email });
 
-  const salt = user.salt;
-  const hashPassword = user.password;
+    const salt = user.salt;
+    const hashPassword = user.password;
 
-  const userProvideHash = createHmac("sha256", salt)
-    .update(password)
-    .digest("hex");
+    const userProvideHash = createHmac("sha256", salt)
+      .update(password)
+      .digest("hex");
 
-  if (userProvideHash !== hashPassword) throw new Error("Password not match");
+    if (userProvideHash !== hashPassword) throw new Error("Password not match");
 
-  return { ...user, password: undefined };
-});
+    const token = generateToken(user);
+    return token;
+  }
+);
 
 module.exports = model("User", userSchema);
