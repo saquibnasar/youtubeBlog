@@ -1,6 +1,6 @@
 const JWT = require("jsonwebtoken");
 
-const secret = process.env.SECRET;
+const secret = process.env.SECRECTKEY;
 
 const generateToken = (user) => {
   const playload = {

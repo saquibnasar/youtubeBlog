@@ -5,6 +5,9 @@ const app = express();
 const port = process.env.PORT;
 const userRouter = require("./routes/user");
 
+const cookieParser = require("cookie-parser");
+// const { checkForAuthCookie } = require("./middlewares/authetication");
+
 // Connect to MongoDB
 const mongoose = require("mongoose");
 mongoose
@@ -12,18 +15,25 @@ mongoose
   .then(() => console.log("Connected to MongoDB"));
 
 // Set views and view engine
-
 app.set("views", path.resolve("./views"));
 app.set("view engine", "ejs");
 
 // Body parser
+app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+
+// middlewares
+
+// there is a problem with authentication middleware
+// app.use(checkForAuthCookie("token"));
 
 // Set static folder
 
 app.get("/", (req, res) => {
-  res.render("index");
+  res.render("index", { user: req.user });
 });
+
 app.use("/", userRouter);
 
 // Listen to port
