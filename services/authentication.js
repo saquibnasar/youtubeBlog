@@ -8,6 +8,7 @@ const generateToken = (user) => {
     email: user.email,
     profileImageUrl: user.profileImageUrl,
     role: user.role,
+    fullName: user.fullName,
   };
   const token = JWT.sign(playload, secret);
   return token;

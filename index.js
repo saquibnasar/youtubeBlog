@@ -1,3 +1,4 @@
+// make cookie when user signs up
 const express = require("express");
 require("dotenv").config();
 const path = require("path");
@@ -6,7 +7,7 @@ const port = process.env.PORT;
 const userRouter = require("./routes/user");
 
 const cookieParser = require("cookie-parser");
-// const { checkForAuthCookie } = require("./middlewares/authetication");
+const { checkForAuthCookie } = require("./middlewares/authentication");
 
 // Connect to MongoDB
 const mongoose = require("mongoose");
@@ -25,13 +26,15 @@ app.use(cookieParser());
 
 // middlewares
 
-// there is a problem with authentication middleware
-// app.use(checkForAuthCookie("token"));
+app.use(checkForAuthCookie("token"));
 
 // Set static folder
 
 app.get("/", (req, res) => {
   res.render("index", { user: req.user });
+});
+app.get("/blog", (req, res) => {
+  res.render("blog");
 });
 
 app.use("/", userRouter);

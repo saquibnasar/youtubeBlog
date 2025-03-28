@@ -21,8 +21,10 @@
           <a class="nav-link active" aria-current="page" href="#">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
+          <a class="nav-link" href="/blog">Blog</a>
         </li>
+        <% if (locals.user) { %>
+
         <li class="nav-item dropdown">
           <a
             class="nav-link dropdown-toggle"
@@ -31,22 +33,21 @@
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            Saquib
+            <%= user.fullName %>
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Log out</a></li>
+            <li><a class="dropdown-item" href="/logout">Log out</a></li>
           </ul>
         </li>
+        <% } else { %>
+        <li class="nav-item">
+          <a class="nav-link" href="/signup">Create Account</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/signin">Login</a>
+        </li>
+        <% } %>
       </ul>
-      <form class="d-flex" role="search">
-        <input
-          class="form-control me-2"
-          type="search"
-          placeholder="Search"
-          aria-label="Search"
-        />
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
     </div>
   </div>
 </nav>
