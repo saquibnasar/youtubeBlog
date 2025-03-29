@@ -5,7 +5,7 @@ const path = require("path");
 
 const multer = require("multer");
 router.get("/addNew", (req, res) => {
-  res.render("blog", { user: req.user });
+  res.render("addBlog", { user: req.user });
 });
 
 const storage = multer.diskStorage({
@@ -32,16 +32,10 @@ router.post("/", upload.single("coverImage"), async (req, res) => {
   return res.redirect(`/blog/${blog._id}`);
 });
 
-router.get("/", async (req, res) => {
-  const allBlogs = await Blog.find({}).sort("createdBy");
-
-  res.render("index", {
-    user: req.user,
-    allBlogs,
-  });
-
-  // const blog = await Blog.findById(req.params.id);
-  // res.render("blog", { blog, user: req.user });
+router.get("/:id", async (req, res) => {
+  const blog = await Blog.findById(req.params.id).populate("createdBy");
+  if (!blog) return res.status(404).send("Blog not found");
+  res.render("blog", { user: req.user, blog });
 });
 
 module.exports = router;

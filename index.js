@@ -6,6 +6,7 @@ const app = express();
 const port = process.env.PORT;
 const userRouter = require("./routes/user");
 const blogRouter = require("./routes/blog");
+const Blog = require("./models/blog");
 
 const cookieParser = require("cookie-parser");
 const { checkForAuthCookie } = require("./middlewares/authentication");
@@ -32,10 +33,15 @@ app.use(checkForAuthCookie("token"));
 
 // Set static folder
 
-app.get("/", (req, res) => {
-  res.render("index", { user: req.user });
-});
 app.use("/", userRouter);
+app.get("/", async (req, res) => {
+  const allBlogs = await Blog.find({}).sort("createdBy");
+
+  res.render("index", {
+    user: req.user,
+    allBlogs,
+  });
+});
 
 app.use("/blog", blogRouter);
 
