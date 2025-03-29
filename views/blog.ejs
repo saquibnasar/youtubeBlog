@@ -6,33 +6,46 @@
   </head>
   <body>
     <%- include('partials/navbar') %>
-    <form>
-      <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Email address</label>
-        <input
-          type="email"
-          class="form-control"
-          id="exampleInputEmail1"
-          aria-describedby="emailHelp"
-        />
-        <div id="emailHelp" class="form-text">
-          We'll never share your email with anyone else.
+    <div class="container mt-3">
+      <form action="/blog" method="POST" enctype="multipart/form-data">
+        <div class="mb-3">
+          <label for="coverImage" class="form-label">Cover Image</label>
+          <input
+            name="coverImage"
+            type="file"
+            class="form-control"
+            id="title"
+            aria-describedby="coverImage"
+          />
         </div>
-      </div>
-      <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">Password</label>
-        <input
-          type="password"
-          class="form-control"
-          id="exampleInputPassword1"
-        />
-      </div>
-      <div class="mb-3 form-check">
-        <input type="checkbox" class="form-check-input" id="exampleCheck1" />
-        <label class="form-check-label" for="exampleCheck1">Check me out</label>
-      </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+        <div class="mb-3">
+          <label for="title" class="form-label">Title</label>
+          <input
+            name="title"
+            type="text"
+            class="form-control"
+            id="title"
+            aria-describedby="titleHelp"
+            placeholder="Enter title"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="floatingTextarea2">Body</label>
+          <div class="form-floating">
+            <div class="form-floating">
+              <textarea
+                name="body"
+                class="form-control"
+                placeholder="Leave a comment here"
+                id="floatingTextarea2"
+                style="height: 100px"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
     <%- include('partials/script') %>
   </body>
 </html>

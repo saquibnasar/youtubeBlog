@@ -5,6 +5,7 @@ const path = require("path");
 const app = express();
 const port = process.env.PORT;
 const userRouter = require("./routes/user");
+const blogRouter = require("./routes/blog");
 
 const cookieParser = require("cookie-parser");
 const { checkForAuthCookie } = require("./middlewares/authentication");
@@ -23,6 +24,7 @@ app.set("view engine", "ejs");
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(express.static(path.resolve("./public")));
 
 // middlewares
 
@@ -33,11 +35,9 @@ app.use(checkForAuthCookie("token"));
 app.get("/", (req, res) => {
   res.render("index", { user: req.user });
 });
-app.get("/blog", (req, res) => {
-  res.render("blog");
-});
-
 app.use("/", userRouter);
+
+app.use("/blog", blogRouter);
 
 // Listen to port
 

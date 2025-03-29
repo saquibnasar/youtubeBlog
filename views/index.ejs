@@ -5,6 +5,19 @@
     <title>Home page</title>
   </head>
   <body>
-    <%- include('partials/navbar') %> <%- include('partials/script') %>
+    <%- include('partials/navbar') %> <% allBlogs.forEach((blog) => { %>
+
+    <div class="card" style="width: 18rem">
+      <img
+        src="/<%= blog.coverImageUrl %>"
+        class="card-img-top"
+        alt="blogImage"
+      />
+      <div class="card-body">
+        <h5 class="card-title"><%= blog.title %></h5>
+        <a href="/blog/<%= blog._id %>" class="btn btn-primary">View</a>
+      </div>
+    </div>
+    <% }) %> <%- include('partials/script') %>
   </body>
 </html>
