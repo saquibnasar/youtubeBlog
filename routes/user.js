@@ -30,7 +30,6 @@ router.post("/signin", async (req, res) => {
 router.post("/signup", async (req, res) => {
   const { fullName, email, password } = req.body;
   const user = await User.create({ fullName, email, password });
-  console.log(user);
   const token = generateToken(user);
   return res.cookie("token", token).redirect("/");
 });

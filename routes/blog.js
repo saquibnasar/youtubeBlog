@@ -38,4 +38,11 @@ router.get("/:id", async (req, res) => {
   res.render("blog", { user: req.user, blog });
 });
 
+router.post("/comment/:blogId", async (req, res) => {
+  await comment.create({
+    conntent: req.body.content,
+    blogId: req.params.blogId,
+  });
+  return res.redirect(`/blog/${req.params.blogId}`);
+});
 module.exports = router;
