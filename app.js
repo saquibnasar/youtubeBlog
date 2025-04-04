@@ -1,6 +1,6 @@
 // make cookie when user signs up
-const express = require("express");
 require("dotenv").config();
+const express = require("express");
 const path = require("path");
 const app = express();
 const port = process.env.PORT;
@@ -14,7 +14,7 @@ const { checkForAuthCookie } = require("./middlewares/authentication");
 // Connect to MongoDB
 const mongoose = require("mongoose");
 mongoose
-  .connect(`mongodb://${process.env.MONGOOSEURL}`)
+  .connect(`mongodb://${process.env.MONGO_URL}`)
   .then(() => console.log("Connected to MongoDB"));
 
 // Set views and view engine

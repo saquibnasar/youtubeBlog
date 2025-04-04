@@ -5,7 +5,7 @@
     <title>Blog</title>
   </head>
   <body>
-    <%- include('partials/navbar') %> <% if (locals.blog) { %> <%
+    <%- include('partials/navbar') %> <% if (locals.blog) { %>
 
     <div class="container mt-4">
       <img
@@ -20,13 +20,46 @@
 
     <div class="container mt-4">
       <img
-        src="<%= blog.createdBy.profileImageUrl %>"
+        src="<%= blog.createdBy?.profileImageUrl %>"
         class="img-fluid"
         alt="authorImage"
         width="80px"
       />
-      <%= blog.createdBy.fullName %>
+      <%= blog.createdBy?.fullName %>
     </div>
+
+    <div class="container mt-4">
+      <h2>Comments (<%= locals.comments.length %>)</h2>
+      <% if (locals.user) { %>
+
+      <form action="/blog/comment/<%= blog._id %>" method="POST">
+        <div class="mb-3">
+          <label for="content" class="form-label">Comment</label>
+          <textarea
+            name="content"
+            class="form-control"
+            id="content"
+            aria-describedby="content"
+          ></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+      <% } %> <% if (locals.comments) { %> <% locals.comments.forEach(comment =>
+      { %>
+      <div class="card mt-4">
+        <div class="d-flex align-items-center">
+          <img src="<%= comment.createdBy?.profileImageUrl %>" //
+          class="image-fluid" alt="authorImage" width="80px" />
+          <h2><%= comment.createdBy?.fullName %></h2>
+        </div>
+        <div class="card-body">
+          <pre class="card-title"><%= comment.content %></pre>
+        </div>
+      </div>
+
+      <% }) %> <% } %>
+    </div>
+
     <% } %> <%- include('partials/script') %>
   </body>
 </html>
